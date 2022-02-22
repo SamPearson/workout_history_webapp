@@ -1,0 +1,2 @@
+#This file is created if no database is present. It should not be checked into git.
+database.db
