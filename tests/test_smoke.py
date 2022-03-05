@@ -7,19 +7,26 @@ from webdriver_manager.firefox import GeckoDriverManager
 from selenium.webdriver.common.by import By
 from selenium.webdriver.common.keys import Keys
 
-#todo - get environment name and url from file
+# TODO - do not hardcode this URL
 test_url = "http://127.0.0.1:5000/"
 
-def test_smoke():
-    #Launch browser
 
-    driver = webdriver.Firefox(service=Service(GeckoDriverManager().install()))
-    driver.implicitly_wait(5) #wait up to 5 seconds for any element
-    driver.get(test_url)
+class TestSmoke:
 
-    #Confirm the login title is present
-    expected_title_text = 'Log In'
-    actual_title_text = driver.find_element(By.TAG_NAME, 'h3').text
+    driver = ''
 
-    assert expected_title_text == actual_title_text, f'Error, expected text {expected_title_text}, but actual text: {actual_title_text}'
-    driver.quit()
+    def setup_method(self):
+        self.driver = webdriver.Firefox(service=Service(GeckoDriverManager().install()))
+        self.driver.implicitly_wait(5) #wait up to 5 seconds for any element
+        self.driver.get(test_url)
+
+    def test_smoke(self):
+
+        # Confirm the login title is present
+        expected_title_text = 'Log In'
+        actual_title_text = self.driver.find_element(By.TAG_NAME, 'h3').text
+
+        assert expected_title_text == actual_title_text, f'Error, expected text {expected_title_text}, but actual text: {actual_title_text}'
+
+    def teardown_method(self):
+        self.driver.quit()
