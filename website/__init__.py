@@ -2,7 +2,7 @@ from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
 from os import path
 from flask_login import LoginManager
-
+import sys
 db = SQLAlchemy()
 DB_NAME = "database.db"
 
@@ -14,11 +14,15 @@ def create_app():
     app.config['SQLALCHEMY_DATABASE_URI'] = f'sqlite:///{DB_NAME}'
     db.init_app(app)
 
-    from .views import views
-    from .auth import auth
+    from .views.allviews import views
+    from .views.auth import auth
+    from .views.admin import admin_blueprint
 
+    #to be removed, broken into many files
     app.register_blueprint(views, url_prefix='/')
+
     app.register_blueprint(auth, url_prefix='/')
+    app.register_blueprint(admin_blueprint, url_prefix='/')
 
     from .models import User, Note, WorkoutPhase
 
