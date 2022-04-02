@@ -1,0 +1,53 @@
+{% extends "base.html" %}
+{% block title %}Admin Page{% endblock %}
+
+{% block content %}
+
+
+<h1 id="titlebar" align="center">Admin</h1>
+
+<h2 id="WorkoutPhases" align="center">Workout Phases</h2>
+<ul class="list-group list-group-flush" id="notes">
+  {% for phase in phases %}
+  <li class="list-group-item"> {{ phase.name }}
+    <button type="button" class="close" onClick="deleteNote({{phase.id}})">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </li>
+  {% endfor %}
+</ul>
+
+<form method="POST">
+  <input class="form-control form-control-sm" type="text"
+    placeholder="Enter a new workout phase e.g. warmup, cooldown, working set"
+    name="workout_phase_input"
+  <br />
+  <div align="center">
+    <button type="submit" class="btn btn-primary">Add Workout Phase</button>
+  </div>
+</form>
+<hr>
+
+
+<h2 id="WorkoutDisciplines" align="center">Workout Disciplines</h2>
+<ul class="list-group list-group-flush" id="notes">
+  {% for note in user.notes %}
+  <li class="list-group-item"> {{ note.data }}
+    <button type="button" class="close" onClick="deleteNote({{note.id}})">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </li>
+  {% endfor %}
+</ul>
+
+<form method="POST">
+  <textarea name="note" id="note" class="form-control"></textarea>
+  <br />
+  <div align="center">
+    <button type="submit" class="btn btn-primary">Add Note</button>
+  </div>
+</form>
+
+
+
+{% endblock %}
