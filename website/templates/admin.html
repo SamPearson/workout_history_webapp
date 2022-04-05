@@ -10,7 +10,7 @@
 <ul class="list-group list-group-flush" id="notes">
   {% for phase in phases %}
   <li class="list-group-item"> {{ phase.name }}
-    <button type="button" class="close" onClick="deleteNote({{phase.id}})">
+    <button type="button" class="close" onClick="deleteWorkoutPhase({{phase.id}})">
       <span aria-hidden="true">&times;</span>
     </button>
   </li>
@@ -48,6 +48,9 @@
   </div>
 </form>
 
-
+<script
+  type="text/javascript"
+  src="{{ url_for('static', filename='admin.js') }}"
+></script>
 
 {% endblock %}

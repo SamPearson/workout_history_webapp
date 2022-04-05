@@ -6,7 +6,7 @@ import json
 
 admin_blueprint = Blueprint('admin', __name__)
 
-@admin_blueprint.route('/admin', methods=['GET','POST'])
+@admin_blueprint.route('/', methods=['GET','POST'])
 def admin():
     if request.method == 'POST':
         workout_phase = request.form.get('workout_phase_input')
@@ -21,3 +21,14 @@ def admin():
 
     phases = WorkoutPhase.query.all()
     return render_template("admin.html", user=current_user, phases=phases)
+
+
+@admin_blueprint.route('/delete-workout-phase', methods=['POST'])
+def delete_workout_phase():
+    workout_phase = json.loads(request.data)
+    workout_phase_ID = workout_phase['id']
+    db_target = WorkoutPhase.query.get(workout_phase_ID)
+    if db_target:
+        db.session.delete(db_target)
+        db.session.commit()
+    return jsonify({})
